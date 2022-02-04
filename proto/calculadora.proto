@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package calculadora;
+
+option go_package = "example.com/calculadoraProto";
+
+// Nuestro servicio calculadoraService cuenta con 4 métodos
+// Estos no viajan por HTTP así que no requerimos métodos HTTP (GET,POST,etc)
+// cada uno de estos métodos tienen como entrada un objeto numbersList y retornan un resultObject
+service calculadoraService {
+
+  rpc sumar(numbersList) returns (resultObject) {}    
+  
+  rpc restar(numbersList) returns (resultObject) {}
+  
+  rpc dividir(numbersList) returns (resultObject) {}
+  
+  rpc multiplicar(numbersList) returns (resultObject) {}
+
+}
+
+//
+// Este mensaje sería un json de esta forma: 
+// { numbers: [1.0, 2.0, 3.0, ...] }
+//
+message numbersList {
+  repeated double numbers = 1;  // el número aquí indica el orden de serialización del atributo
+}
+
+//
+// Este mensaje sería un json de esta forma: 
+// { status: "", result: 0.0 }
+//
+message resultObject {
+  string status = 1; 
+  double result = 2;
+}
